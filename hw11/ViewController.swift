@@ -22,13 +22,14 @@ class ViewController: UIViewController {
         let label = UILabel()
         label.text = "Login"
         label.textColor = .white
-        label.font = UIFont.boldSystemFont(ofSize: 24)
+        label.font = UIFont.boldSystemFont(ofSize: 30)
         return label
     }()
     
     private lazy var loginTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "gazizovdastan"
+        textField.font = UIFont.systemFont(ofSize: 14)
         textField.setLeftIcon(UIImage(named: "person")!)
         textField.setRightIcon(UIImage(named: "checkMark")!)
         textField.backgroundColor = .white
@@ -39,6 +40,7 @@ class ViewController: UIViewController {
     private lazy var passwordTextField = {
         let passwordField = UITextField()
         passwordField.placeholder = "Password"
+        passwordField.font = UIFont.systemFont(ofSize: 14)
         passwordField.setLeftIcon(UIImage(named: "key")!)
         let padding: CGFloat = 10.0
         passwordField.setRightPadding(padding)
@@ -48,8 +50,9 @@ class ViewController: UIViewController {
     }()
     
     private lazy var loginButton: UIButton = {
-        let button = UIButton()
+        let button = UIButton(type: .system)
         button.setTitle("Login", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
         button.setTitleColor(.white, for: .normal)
         button.backgroundColor = UIColor(red: 0.42, green: 0.45, blue: 0.81, alpha: 1.00)
         button.clipsToBounds = true
@@ -64,7 +67,7 @@ class ViewController: UIViewController {
     }()
     
     private lazy var passwordForgotButton: UIButton = {
-        let button = UIButton()
+        let button = UIButton(type: .system)
         button.setTitle("Forgot your password?", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 12)
@@ -79,23 +82,24 @@ class ViewController: UIViewController {
         return connectLabel
     }()
     
-    private lazy var firstLineView: UIView = {
+    private lazy var leftLineView: UIView = {
         let lineView = UIView()
-        lineView.backgroundColor = .gray
+        lineView.backgroundColor = .lightGray
         lineView.layer.cornerRadius = 2
         return lineView
     }()
     
-    private lazy var secondLineView: UIView = {
+    private lazy var rightLineView: UIView = {
         let lineView = UIView()
-        lineView.backgroundColor = .gray
+        lineView.backgroundColor = .lightGray
         lineView.layer.cornerRadius = 2
         return lineView
     }()
     
-    private lazy var facbookButton: UIButton = {
+    private lazy var facebookButton: UIButton = {
         let button = UIButton()
         button.setTitle("Facebook", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
         button.setTitleColor(.white, for: .normal)
         button.setImage(UIImage(named: "facebook"), for: .normal)
         button.configuration = .filled()
@@ -115,6 +119,7 @@ class ViewController: UIViewController {
     private lazy var twitterButton: UIButton = {
         let button = UIButton()
         button.setTitle("Twitter", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
         button.setTitleColor(.white, for: .normal)
         button.setImage(UIImage(named: "twitter"), for: .normal)
         button.configuration = .filled()
@@ -131,7 +136,7 @@ class ViewController: UIViewController {
         return button
     }()
     
-    private lazy var noAccauntLabel: UILabel = {
+    private lazy var dontHaveAccountLabel: UILabel = {
         let label = UILabel()
         label.text = "Don't have accaunt?"
         label.textColor = UIColor(red: 0.48, green: 0.48, blue: 0.48, alpha: 1.00)
@@ -140,7 +145,7 @@ class ViewController: UIViewController {
     }()
     
     private lazy var signUpButton: UIButton = {
-        let button = UIButton()
+        let button = UIButton(type: .system)
         button.setTitle("Sign up", for: .normal)
         button.setTitleColor(.systemIndigo, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 12)
@@ -151,12 +156,108 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupHierarchy()
+        setupViews()
     }
     
     // MARK: - Setup
     
     private func setupHierarchy() {
         view.addSubview(backgroundImageView)
+        view.addSubview(loginLabel)
+        view.addSubview(loginTextField)
+        view.addSubview(passwordTextField)
+        view.addSubview(loginButton)
+        view.addSubview(passwordForgotButton)
+        view.addSubview(connectLineLabel)
+        view.addSubview(leftLineView)
+        view.addSubview(rightLineView)
+        view.addSubview(facebookButton)
+        view.addSubview(twitterButton)
+        view.addSubview(dontHaveAccountLabel)
+        view.addSubview(signUpButton)
+    }
+    
+    private func setupViews() {
+        let heigt = UIScreen.main.bounds.height
+        backgroundImageView.snp.makeConstraints { make in
+            make.top.left.right.equalToSuperview()
+            make.height.equalTo(heigt * 0.675)
+        }
+
+        loginLabel.snp.makeConstraints { make in
+            make.top.equalTo(view.snp.top).offset(105)
+            make.centerX.equalToSuperview()
+        }
+
+        loginTextField.snp.makeConstraints { make in
+            make.top.equalTo(loginLabel.snp.bottom).offset(37)
+            make.centerX.equalToSuperview()
+            make.leading.equalToSuperview().offset(50)
+            make.trailing.equalToSuperview().offset(-50)
+            make.height.equalTo(45)
+        }
+
+        passwordTextField.snp.makeConstraints { make in
+            make.top.equalTo(loginTextField.snp.bottom).offset(18)
+            make.leading.trailing.height.equalTo(loginTextField)
+        }
+
+        loginButton.snp.makeConstraints { make in
+            make.top.equalTo(passwordTextField.snp.bottom).offset(48)
+            make.centerX.equalToSuperview()
+            make.leading.trailing.equalTo(loginTextField)
+            make.height.equalTo(40)
+        }
+
+        passwordForgotButton.snp.makeConstraints { make in
+            make.top.equalTo(loginButton.snp.bottom).offset(24)
+            make.centerX.equalToSuperview()
+        }
+        
+        dontHaveAccountLabel.snp.makeConstraints { make in
+            make.bottom.equalToSuperview().offset(-90)
+            make.left.equalToSuperview().offset(112)
+        }
+
+        signUpButton.snp.makeConstraints { make in
+            make.bottom.equalToSuperview().offset(-90)
+            make.left.equalTo(dontHaveAccountLabel.snp.right).offset(12)
+            make.height.equalTo(14)
+        }
+        
+        facebookButton.snp.makeConstraints { make in
+            make.bottom.equalTo(dontHaveAccountLabel.snp.top).offset(-55)
+            make.leading.equalToSuperview().offset(30)
+            make.trailing.equalToSuperview().offset(-205)
+            make.width.equalTo(150)
+        }
+
+        twitterButton.snp.makeConstraints { make in
+            make.bottom.equalTo(dontHaveAccountLabel.snp.top).offset(-55)
+            make.leading.equalToSuperview().offset(205)
+            make.trailing.equalToSuperview().offset(-30)
+            make.width.equalTo(150)
+        }
+
+        connectLineLabel.snp.makeConstraints { make in
+            make.top.equalTo(facebookButton.snp.top).offset(-40)
+            make.centerX.equalToSuperview()
+        }
+
+        leftLineView.snp.makeConstraints { make in
+            make.centerY.equalTo(connectLineLabel.snp.centerY)
+            make.right.equalTo(connectLineLabel.snp.left).offset(-15)
+            make.height.equalTo(1)
+            make.width.equalTo(70)
+        }
+
+        rightLineView.snp.makeConstraints { make in
+            make.centerY.equalTo(connectLineLabel.snp.centerY)
+            make.left.equalTo(connectLineLabel.snp.right).offset(15)
+            make.height.equalTo(1)
+            make.width.equalTo(70)
+        }
     }
 }
 
